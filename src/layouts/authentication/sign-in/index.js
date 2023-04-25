@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import axios from "axios";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -34,6 +35,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import { useNavigate } from "react-router-dom";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -42,7 +44,33 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate=useNavigate();
+
+  const handleSignIn = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        "http://localhost:5000/api/users/login",
+        { email, password },
+        config
+      );
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      navigate("/Dashboard");
+
+      console.log(data); // log the response from the backend API
+    } catch (error) {
+      console.log(error); // log any errors that occur during the API request
+    }
+  };
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -63,19 +91,39 @@ function Basic() {
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+          <Grid
+            container
+            spacing={3}
+            justifyContent="center"
+            sx={{ mt: 1, mb: 2 }}
+          >
             <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
+              <MDTypography
+                component={MuiLink}
+                href="#"
+                variant="body1"
+                color="white"
+              >
                 <FacebookIcon color="inherit" />
               </MDTypography>
             </Grid>
             <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
+              <MDTypography
+                component={MuiLink}
+                href="#"
+                variant="body1"
+                color="white"
+              >
                 <GitHubIcon color="inherit" />
               </MDTypography>
             </Grid>
             <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
+              <MDTypography
+                component={MuiLink}
+                href="#"
+                variant="body1"
+                color="white"
+              >
                 <GoogleIcon color="inherit" />
               </MDTypography>
             </Grid>
@@ -84,10 +132,22 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -102,7 +162,12 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                color="info"
+                fullWidth
+                onClick={handleSignIn}
+              >
                 sign in
               </MDButton>
             </MDBox>
