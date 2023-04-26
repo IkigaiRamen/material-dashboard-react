@@ -4,7 +4,7 @@ import axios from "axios";
 import { Card, Button } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
 import { io } from "socket.io-client";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, useParams } from "react-router-dom";
 
 import { Link } from 'react-router-dom';
 import MDButton from "components/MDButton";
@@ -14,6 +14,7 @@ const { Meta } = Card;
 const socket = io("ws://localhost:5000");
 
 function AuctionList() {
+  const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [biddingAmount, setBiddingAmount] = useState(0);
@@ -26,6 +27,7 @@ function AuctionList() {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const userInfo = localStorage.getItem('userInfo');
+  const [topBids,setTopBids]=useState([]);
 
  
 
@@ -72,41 +74,21 @@ function AuctionList() {
   }, []);
   console.log(userInfo);
 
- 
-  //   // Listen for new bids and update the product list in real-time
-  //   socket.on("newBid", ({ productId, user, amount }) => {
-  //     setProducts((prevProducts) =>
-  //       prevProducts.map((product) =>
-  //         product._id === productId
-  //           ? {
-  //               ...product,
-  //               currentPrice: amount,
-  //               bids: [...product.bids, { user, amount }],
-  //             }
-  //           : product
-  //       )
-  //     );
-  //   });
 
-  //   // Listen for winner notifications
-  //   socket.on("winner", ({ productId, user }) => {
-  //     setWinner({ productId, user });
-  //     setCurrentProduct(null);
-  //   });
+useEffect(()=>{
+  fetchTopBids();
+},[])
 
-  //   // Clean up Socket.IO listeners
-  //   return () => {
-  //     socket.off("newBid");
-  //     socket.off("winner");
-  //   };
-  // }, []);
 
-  // useEffect(() => {
-  //   // Fetch products from server when component mounts
-  //   fetch("/api/products")
-  //     .then((response) => response.json())
-  //     .then((data) => setProducts(data));
-  // }, []);
+  const fetchTopBids = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:5000/api/products/topBidders/${id}`);
+      setTopBids(data);
+      console.log(data)
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   const handleProductSelect = (product) => {
     setCurrentProduct(product);
@@ -156,135 +138,135 @@ const handleDelete = async (id) => {
 };
 
 
-  return (
-    <Container class="bg-image">
-      <Container maxWidth="sm"></Container>
-      <Row gutter={[16, 16]}>
-        {products.map((product) => (
-          <Col span={12} md={6} lg={4} key={product._id}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  alt={product.name}
-                  src={`../..${product.imageUrl}`}
-                  style={{ height: 250 }}
-                />
-              }
-              actions={[]}
+return (
+  <Container class="bg-image">
+    <Container maxWidth="sm"></Container>
+    <Row gutter={[16, 16]}>
+      {products.map((product) => (
+        <Col span={12} md={6} lg={4} key={product._id}>
+          <Card
+            hoverable
+            cover={
+              <img
+                alt={product.name}
+                src={`../..${product.imageUrl}`}
+                style={{ height: 250 }}
+              />
+            }
+            actions={[]}
+          >
+            <Link to={`/detailproduct/${product._id}`}>
+                    <MDButton variant="info" className="mr-2">Details</MDButton>
+                  </Link>
+            {product.id !== userInfo && (
+            <div>
+                  <Link to={`/updateformproduct/${product._id}`}>
+                    <MDButton variant="info" className="mr-2">Update</MDButton>
+                  </Link>
+                  <MDButton variant="danger" onClick={() => handleDelete(product._id)}>
+                    Delete
+                  </MDButton>
+                </div>
+            )}
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Meta
+                title={product.name}
+                description={`${product.description} - ${product.currentPrice}`}
+                style={{ height: 100, overflow: "hidden" }}
+              />
+              <MDButton
+                type="text"
+                onClick={handleClick}
+                icon={<HeartOutlined />}
+              />
+            </div>
+            <div
+              style={{
+                backgroundColor: "#01182c14",
+                height: 53,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                display: "flex",
+              }}
             >
-              <Link to={`/detailproduct/${product._id}`}>
-                      <MDButton variant="info" className="mr-2">Details</MDButton>
-                    </Link>
-              {product.id !== userInfo && (
-              <div>
-                    <Link to={`/updateformproduct/${product._id}`}>
-                      <MDButton variant="info" className="mr-2">Update</MDButton>
-                    </Link>
-                    <MDButton variant="danger" onClick={() => handleDelete(product._id)}>
-                      Delete
-                    </MDButton>
-                  </div>
-              )}
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Meta
-                  title={product.name}
-                  description={`${product.description} - ${product.currentPrice}`}
-                  style={{ height: 100, overflow: "hidden" }}
-                />
-                <MDButton
-                  type="text"
-                  onClick={handleClick}
-                  icon={<HeartOutlined />}
-                />
-              </div>
               <div
                 style={{
-                  backgroundColor: "#01182c14",
                   height: 53,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  display: "flex",
+                  width: 60,
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  textAlign: "center",
                 }}
               >
+                <div style={{ marginTop: 17 }}>BID</div>
+                <div className={"auction-anchor"}></div>
+              </div>
+              <div style={{ marginRight: 10 }}>
+                <div
+                  style={{ fontSize: 14, fontWeight: "bold", color: "#555" }}
+                >
+                  Current Bid
+                </div>
                 <div
                   style={{
-                    height: 53,
-                    width: 60,
-                    fontSize: 14,
+                    fontSize: 18,
                     fontWeight: "bold",
-                    textAlign: "center",
+                    textAlign: "right",
                   }}
                 >
-                  <div style={{ marginTop: 17 }}>BID</div>
-                  <div className={"auction-anchor"}></div>
-                </div>
-                <div style={{ marginRight: 10 }}>
-                  <div
-                    style={{ fontSize: 14, fontWeight: "bold", color: "#555" }}
-                  >
-                    Current Bid
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      textAlign: "right",
-                    }}
-                  >
-                    ${product.currentPrice}
-                  </div>
+                  ${product.currentPrice}
                 </div>
               </div>
-              <MDButton onClick={() => handleProductSelect(product)}>
-                Select
-              </MDButton>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-
-      {currentProduct && (
-        <div>
-          <h2>{currentProduct.name}</h2>
-          <p>Current price: {currentProduct.currentPrice}</p>
-
-          <p>Time left: {isTimeLeft ? "Auction has ended" : timeleft}</p>
-          {/* Display the remaining time left */}
-          <h3>Bids</h3>
-          <ul>
-            {currentProduct.bids.map((bid, index) => (
-              <li key={index}>
-                {bid.user} - {bid.amount}
-              </li>
-            ))}
-          </ul>
-          {currentProduct &&
-          currentProduct._id === "6446044732ce87c35e7e19b3" ? null : (
-            <div>
-              <MDInput
-                type="number"
-                placeholder="Enter your bid amount"
-                value={biddingAmount}
-                onChange={handleBiddingAmountChange}
-              />
-              <MDButton type="primary" onClick={handleBidSubmit}>
-                Submit Bid
-              </MDButton>
             </div>
-          )}
+            <MDButton onClick={() => handleProductSelect(product)}>
+              Select
+            </MDButton>
+          </Card>
+        </Col>
+      ))}
+    </Row>
 
-          {/* <MDButton onClick={handleEndBidding}>End bidding</MDButton> */}
-        </div>
-      )}
-      {winner && (
-        <div>
-          <h2>Congratulations!</h2>
-          <p>You won the bidding for {winner.productId}!</p>
-        </div>
-      )}
-    </Container>
-  );
+    {currentProduct && (
+      <div>
+        <h2>{currentProduct.name}</h2>
+        <p>Current price: {currentProduct.currentPrice}</p>
+
+        <p>Time left: {isTimeLeft ? "Auction has ended" : timeleft}</p>
+        {/* Display the remaining time left */}
+        <h3>Bids</h3>
+        <ul>
+          {currentProduct.bids.map((bid, index) => (
+            <li key={index}>
+              {bid.user} - {bid.amount}
+            </li>
+          ))}
+        </ul>
+        {currentProduct &&
+        currentProduct._id === "6446044732ce87c35e7e19b3" ? null : (
+          <div>
+            <MDInput
+              type="number"
+              placeholder="Enter your bid amount"
+              value={biddingAmount}
+              onChange={handleBiddingAmountChange}
+            />
+            <MDButton type="primary" onClick={handleBidSubmit}>
+              Submit Bid
+            </MDButton>
+          </div>
+        )}
+
+        {/* <MDButton onClick={handleEndBidding}>End bidding</MDButton> */}
+      </div>
+    )}
+    {winner && (
+      <div>
+        <h2>Congratulations!</h2>
+        <p>You won the bidding for {winner.productId}!</p>
+      </div>
+    )}
+  </Container>
+);
 }
 
 export default AuctionList;

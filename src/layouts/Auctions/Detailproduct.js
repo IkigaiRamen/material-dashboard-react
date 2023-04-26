@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 function ProductDetail(props) {
   const [product, setProduct] = useState({});
   const { id } = useParams();
-
+  const [topBids,setTopBids]=useState([]);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -18,8 +18,19 @@ function ProductDetail(props) {
       }
     };
     fetchProduct();
+    fetchTopBids();
   }, [id]);
 
+
+    const fetchTopBids = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:5000/api/products/topBidders/${id}`);
+        setTopBids(data);
+        console.log(data)
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
   return (
     <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
 
@@ -33,6 +44,7 @@ function ProductDetail(props) {
           <MDTypography variant="body1">Starting Price: ${product.startingPrice}</MDTypography>
           <MDTypography variant="body1">Current Price: ${product.currentPrice}</MDTypography>
           <MDTypography variant="body1">Bidding End Time: {product.biddingEndTime}</MDTypography>
+        <h2>BIDS</h2>
         </Col>
       </Row>
     </Container>

@@ -3,6 +3,8 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import axios from "axios";
+import MDInput from "components/MDInput";
+import MDButton from "components/MDButton";
 
 function UpdateProduct() {
   const {id} = useParams()
@@ -37,7 +39,7 @@ function UpdateProduct() {
       });
     }
   return (
-    <Container>
+    <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
     <h2 style={{ textAlign: 'center', marginTop: '100px' }}>
       Update your project idea and let others fund it!
     </h2>
@@ -46,9 +48,9 @@ function UpdateProduct() {
       <Row>
         <Col md={6}>
           <Form.Group controlId='name'>
-            <Form.Label>
+            <MDInput>
               Name <span style={{ color: 'red' }}>*</span>
-            </Form.Label>
+            </MDInput>
             <Form.Control
               type='text'
               placeholder='Enter name'
@@ -58,9 +60,9 @@ function UpdateProduct() {
             />
           </Form.Group>
           <Form.Group controlId='description'>
-            <Form.Label>
+            <MDInput>
               Description <span style={{ color: 'red' }}>*</span>
-            </Form.Label>
+            </MDInput>
             <Form.Control
               as='textarea'
               rows={3}
@@ -72,9 +74,9 @@ function UpdateProduct() {
             />
           </Form.Group>
           <Form.Group controlId='amount'>
-            <Form.Label>
+            <MDInput>
             Starting Price <span style={{ color: 'red' }}>*</span>
-            </Form.Label>
+            </MDInput>
             <Form.Control
               type='number'
               placeholder='Enter starting Price'
@@ -84,7 +86,7 @@ function UpdateProduct() {
             />
           </Form.Group>
           <Form.Group controlId="productBiddingEndTime">
-          <Form.Label>Bidding End Time</Form.Label>
+          <MDInput>Bidding End Time</MDInput>
           <Form.Control
             type="datetime-local"
             placeholder="Enter bidding end time"
@@ -92,13 +94,13 @@ function UpdateProduct() {
             onChange={(event) => setBiddingEndTime(event.target.value)}
           />
         </Form.Group>
-          <Button variant='success' type='submit' className="submit-btn">
+          <MDButton variant='success' type='submit' className="submit-btn">
             Update Product
-          </Button>
+          </MDButton>
           <Link to={`/auctionList/`}>
-          <Button variant='success' type='submit' className="submit-btn">
+          <MDButton variant='success' type='submit' className="submit-btn">
             Back to List 
-          </Button>
+          </MDButton>
           </Link>
         </Col>
       </Row>
