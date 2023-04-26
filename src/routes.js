@@ -51,6 +51,7 @@ import UploadFormProduct from "layouts/Auctions/UploadForm";
 import AuctionList from "layouts/Auctions/AuctionList";
 import UpdateProduct from "layouts/Auctions/UpdateProduct";
 import MyProducts from "layouts/Auctions/Myproducts";
+import ProductDetail from "layouts/Auctions/Detailproduct";
 
 const routes = [
   {
@@ -126,12 +127,16 @@ const routes = [
     component:<UploadFormProduct />,
   },
   {
-    route:"/updateformproduct",
+    route:"/updateformproduct/:id",
     component:<UpdateProduct />,
   },
   {
     route:"/myproducts",
     component:<MyProducts />,
+  },
+  {
+    route:"/detailproduct/:id",
+    component:<ProductDetail />,
   },
 ];
 

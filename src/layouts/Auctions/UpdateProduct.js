@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-
+import { Link } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import axios from "axios";
 
@@ -29,10 +29,11 @@ function UpdateProduct() {
     axios.put(`http://localhost:5000/api/products/${id}`, updateproductData 
       )
       .then(response => {
-        console.log('Product updated successfully!');
+        alert('Product updated successfully!');
       })
       .catch(error => {
         console.error(error);
+        alert("Failed to update product.");
       });
     }
   return (
@@ -94,6 +95,11 @@ function UpdateProduct() {
           <Button variant='success' type='submit' className="submit-btn">
             Update Product
           </Button>
+          <Link to={`/auctionList/`}>
+          <Button variant='success' type='submit' className="submit-btn">
+            Back to List 
+          </Button>
+          </Link>
         </Col>
       </Row>
     </Form>

@@ -173,10 +173,13 @@ const handleDelete = async (id) => {
               }
               actions={[]}
             >
-              {product.creator === userInfo && (
+              <Link to={`/detailproduct/${product._id}`}>
+                      <MDButton variant="info" className="mr-2">Details</MDButton>
+                    </Link>
+              {product.id !== userInfo && (
               <div>
                     <Link to={`/updateformproduct/${product._id}`}>
-                      <Button variant="info" className="mr-2">Update</Button>
+                      <MDButton variant="info" className="mr-2">Update</MDButton>
                     </Link>
                     <MDButton variant="danger" onClick={() => handleDelete(product._id)}>
                       Delete
