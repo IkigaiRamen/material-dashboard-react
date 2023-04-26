@@ -47,6 +47,10 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import UploadFormProduct from "layouts/Auctions/UploadForm";
+import AuctionList from "layouts/Auctions/AuctionList";
+import UpdateProduct from "layouts/Auctions/UpdateProduct";
+import MyProducts from "layouts/Auctions/Myproducts";
 
 const routes = [
   {
@@ -112,6 +116,22 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+  },
+  {
+    route:"/auctionList",
+    component:<AuctionList />,
+  },
+  {
+    route:"/uploadformproduct",
+    component:<UploadFormProduct />,
+  },
+  {
+    route:"/updateformproduct",
+    component:<UpdateProduct />,
+  },
+  {
+    route:"/myproducts",
+    component:<MyProducts />,
   },
 ];
 
