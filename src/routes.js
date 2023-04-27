@@ -44,6 +44,12 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import CreateProjectIdeaComponent from './layouts/FundMe/createProjectIdeaComponent'
+import UpdateProjectForm from './layouts/FundMe/updateProjectIdea'
+import ProjectIdeaDetailComponent from './layouts/FundMe/projectDetail'
+import MyProjectsComponent from './layouts/FundMe/myProjects'
+import ProjectIdeasComponent from './layouts/FundMe/projectIdeasComponent'
+import PaidIcon from '@mui/icons-material/Paid';
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -113,6 +119,23 @@ const routes = [
     route: "/authentication/sign-up",
     component: <SignUp />,
   },
+  {
+    type: "collapse",
+    name: "FundMe",
+    key: "FundMe",
+    icon: <PaidIcon fontSize="small">FundMe</PaidIcon>,
+    route: "/fundMe/project-ideas",
+    component: <ProjectIdeasComponent/>,
+  },
+
+  { route: '/fundMe/project_detail/:id', name: "detailP", key: "detailP", component: <ProjectIdeaDetailComponent/>},
+  { route: '/fundMe/updateProjects/:id',  name: "updateP", key: "updateP",component: <UpdateProjectForm/>}, 
+  { route: '/fundMe/create-idea', name: "createP",key: "createP", component: <CreateProjectIdeaComponent/>},
+  { route: '/fundMe/myProjects', name: "myprojects", key: "myprojects", component: <MyProjectsComponent/>},
+
+ 
+  
+ 
 ];
 
 export default routes;

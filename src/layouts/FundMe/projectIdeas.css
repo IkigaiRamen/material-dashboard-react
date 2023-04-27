@@ -1,0 +1,116 @@
+/* Set a maximum width for the container */
+.container {
+    max-width: 1200px;
+  }
+  
+  /* Style the buttons in the header */
+  .container .d-flex.align-items-center button {
+    padding: 0.5rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  /* Style the "Add New Project Idea" button */
+  .container .d-flex.align-items-center .my-3.mr-3 {
+    background-color: #2e7d32;
+    border-color: #2e7d32;
+  }
+  
+  /* Style the "My Projects" button */
+  .container .d-flex.align-items-center .my-3.ml-3 {
+    background-color: #4285f4;
+    border-color: #4285f4;
+  }
+  
+  /* Style the heading for the section */
+  .container main .MuiTypography-h6:first-of-type {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #444444;
+  }
+  
+  /* Style the subheading for the section */
+  .container main .MuiTypography-h6:last-of-type {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    color: #666666;
+  }
+  
+  /* Style the success alert */
+  .container main .alert-success {
+    margin-top: 1.5rem;
+  }
+  
+  /* Style the error alert */
+  .container main .alert-danger {
+    margin-top: 1.5rem;
+  }
+  
+  /* Style the project cards */
+  .container main .card {
+    width: 20%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    margin-bottom: 20px;
+  }
+  
+  /* Style the project card images */
+  .container main .card .card-img-top {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  
+  /* Style the project card titles */
+  .container main .card .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Style the project card descriptions */
+  .container main .card .card-text {
+    margin-bottom: 1rem;
+  }
+  
+  /* Style the project card funding goals */
+  .container main .card .card-text:last-of-type {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Style the progress bars */
+  .container main .progress {
+    height: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Style the progress bar labels */
+  .container main .progress .progress-bar {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  /* Style the "Update" button */
+  .container main .card .btn-info {
+    margin-right: 0.5rem;
+    background-color: #4285f4;
+    border-color: #4285f4;
+  }
+  
+  /* Style the "Delete" button */
+  .container main .card .btn-danger {
+    background-color: #ea4335;
+    border-color: #ea4335;
+  }
+  
+  /* Style the "View Details" button */
+  .container main .card .btn-primary {
+    margin-top: 1rem;
+    background-color: #4285f4;
+    border-color: #4285f4;
+  }
+  

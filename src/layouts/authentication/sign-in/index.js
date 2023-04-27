@@ -47,6 +47,7 @@ function Basic() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [twoFA, setTwoFA] = useState("");
   const navigate=useNavigate();
 
   const handleSignIn = async () => {
@@ -149,6 +150,17 @@ function Basic() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </MDBox>
+            <MDBox mb={2}> 2-Factor Authentification
+            
+          <MDInput
+          title= "Two Factor Authentification"
+            type="checkbox"
+            
+            checked={twoFA}
+            onChange={(e) => setTwoFA(e.target.checked)}
+          />
+        
+        </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography

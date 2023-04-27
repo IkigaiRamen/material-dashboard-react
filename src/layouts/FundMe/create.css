@@ -1,0 +1,80 @@
+/* Container styles */
+.Container {
+    margin-top: 100px;
+  }
+  
+  /* Typography styles */
+  .MDTypography {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  
+  /* Form styles */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Input styles */
+  .MDInput {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .MDInput:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Label styles */
+  .MDBox {
+    margin-bottom: 20px;
+  }
+  
+  .MDBox > .MDTypography {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .MDBox > .MDTypography > span {
+    margin-left: 5px;
+  }
+  
+  /* Button styles */
+  .MDButton {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  }
+  
+  .MDButton:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+  
+  .MDButton:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    outline: 0;
+  }
+  
+  /* Image styles */
+  img {
+    max-width: 100%;
+  }
+  
