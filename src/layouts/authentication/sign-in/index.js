@@ -1,55 +1,35 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
-import axios from "axios";
-
-// react-router-dom components
+import { useState,useContext } from "react";
 import { Link } from "react-router-dom";
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
-
-// @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import { useNavigate } from "react-router-dom";
-
-// Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-
-// Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-
+import { Context } from "../../../ContextStore";
+import { loginUser } from "../../../market/services/userData";
+import Spinner from 'react-bootstrap/Spinner';
 function Basic() {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const navigate=useNavigate();
 
-  const handleSignIn = async () => {
+  const { setUserData } = useContext(Context);
+  const [error, setError] = useState(null);
+  const [alertShow, setAlertShow] = useState(false);
+
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
+
+  /*  const handleSignIn = async () => {
     try {
       const config = {
         headers: {
@@ -70,6 +50,28 @@ function Basic() {
     } catch (error) {
       console.log(error); // log any errors that occur during the API request
     }
+  }; */
+
+
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const user ={
+      email,
+      password
+    }
+    loginUser(user)
+      .then((res) => {
+        if (!res.error) {
+          setUserData(res.user);
+          navigate("/Market");
+        } else {
+          setLoading(false);
+          setError(res.error.message);
+          setAlertShow(true);
+        }
+      })
+      .catch((err) => console.error("error from login: ", err));
   };
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
@@ -162,14 +164,20 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                color="info"
-                fullWidth
-                onClick={handleSignIn}
-              >
-                sign in
-              </MDButton>
+              {loading ? (
+                <MDButton variant="gradient" disabled color="info" fullWidth>
+                 please wait <Spinner animation="border" variant="primary" />
+                </MDButton>
+              ) : (
+                <MDButton
+                  variant="gradient"
+                  color="info"
+                  fullWidth
+                  onClick={handleSubmitLogin}
+                >
+                  sign in
+                </MDButton>
+              )}
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">

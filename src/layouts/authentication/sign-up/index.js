@@ -1,70 +1,60 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
-// @mui material components
 import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-
-// Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
-
-// Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import { registerUser } from "market/services/userData";
+import {Spinner,Alert} from 'react-bootstrap';
 
 function Cover() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstName] = useState("");
+  const [gender, setGender] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [alertShow, setAlertShow] = useState(false);
+  const [error, setError] = useState(null);
   const [lastname, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const [twoFA,setTwoFa]=useState(false)
-
+  const [twoFA, setTwoFa] = useState(false);
+  const navigate = useNavigate();
 
   const handleRegister = () => {
+    setLoading(true);
     const userData = {
       firstname,
       lastname,
+      gender,
+      phoneNumber,
       email,
       password,
       isAdmin,
-      twoFA
+      twoFA,
     };
-    console.log(userData);
-  
-    axios.post("http://localhost:5000/api/users/", userData)
-      .then((response) => {
-        console.log(response.data);
+    registerUser(userData)
+      .then((res) => {
+        if (!res.error) {
+          navigate("/authentication/sign-in");
+        } else {
+          setLoading(false);
+          setError(res.error);
+          setAlertShow(true);
+        }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((err) => console.error("error from register: ", err));
   };
 
   return (
     <CoverLayout image={bgImage}>
       <Card>
+        
         <MDBox
           variant="gradient"
           bgColor="info"
@@ -83,6 +73,15 @@ function Cover() {
             Enter your email and password to register
           </MDTypography>
         </MDBox>
+        {alertShow && (
+          <Alert
+            variant="danger"
+            onClose={() => setAlertShow(false)}
+            dismissible
+          >
+            <p>{error}</p>
+          </Alert>
+        )}
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
@@ -112,6 +111,15 @@ function Cover() {
                 fullWidth
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </MDBox>
+            <MDBox mb={2}>
+              <MDInput
+                type="tel"
+                label="Phone Number"
+                fullWidth
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </MDBox>
             <MDBox mb={2}>
@@ -146,6 +154,11 @@ function Cover() {
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDBox mt={4} mb={1}>
+              {loading ? (
+                <MDButton variant="gradient" disabled color="info" fullWidth>
+                 please wait <Spinner animation="border" variant="primary" />
+                </MDButton>
+              ) : (
                 <MDButton
                   variant="gradient"
                   color="info"
@@ -154,6 +167,7 @@ function Cover() {
                 >
                   register
                 </MDButton>
+              )}
               </MDBox>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
