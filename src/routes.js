@@ -52,7 +52,7 @@ import AuctionList from "layouts/Auctions/AuctionList";
 import UpdateProduct from "layouts/Auctions/UpdateProduct";
 import MyProducts from "layouts/Auctions/Myproducts";
 import ProductDetail from "layouts/Auctions/Detailproduct";
-
+import AvTimerIcon from '@mui/icons-material/AvTimer';
 const routes = [
   {
     type: "collapse",
@@ -119,6 +119,10 @@ const routes = [
     component: <SignUp />,
   },
   {
+    type: "collapse",
+    name: "Auction",
+    key: "auction",
+    icon: <AvTimerIcon fontSize="small"></AvTimerIcon>,
     route:"/auctionList",
     component:<AuctionList />,
   },

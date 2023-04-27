@@ -5,7 +5,11 @@ import {useParams} from 'react-router-dom';
 import axios from "axios";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-
+import MDBox from "components/MDBox";
+import CoverLayout from "layouts/authentication/components/CoverLayout";
+import MDTypography from "components/MDTypography";
+import Card from "@mui/material/Card";
+import bgImage from "assets/images/istockphoto.jpeg";
 function UpdateProduct() {
   const {id} = useParams()
 
@@ -26,6 +30,7 @@ function UpdateProduct() {
       name: name,
       description: description,
       startingPrice: startingPrice,
+      biddingEndTime:biddingEndTime,
     };
 
     axios.put(`http://localhost:5000/api/products/${id}`, updateproductData 
@@ -38,75 +43,94 @@ function UpdateProduct() {
         alert("Failed to update product.");
       });
     }
-  return (
-    <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-    <h2 style={{ textAlign: 'center', marginTop: '100px' }}>
-      Update your project idea and let others fund it!
-    </h2>
-    <Form onSubmit={handleSubmit} className="update-form">
-
-      <Row>
-        <Col md={6}>
-          <Form.Group controlId='name'>
-            <MDInput>
-              Name <span style={{ color: 'red' }}>*</span>
-            </MDInput>
-            <Form.Control
-              type='text'
-              placeholder='Enter name'
-              value={name}
-              required
-              onChange={(event) => setName(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId='description'>
-            <MDInput>
-              Description <span style={{ color: 'red' }}>*</span>
-            </MDInput>
-            <Form.Control
-              as='textarea'
-              rows={3}
-              type='description'
-              placeholder='Enter description'
-              value={description}
-              required
-              onChange={(event) => setDescription(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId='amount'>
-            <MDInput>
-            Starting Price <span style={{ color: 'red' }}>*</span>
-            </MDInput>
-            <Form.Control
-              type='number'
-              placeholder='Enter starting Price'
-              value={startingPrice}
-              required
-              onChange={(event) => setStartingPrice(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="productBiddingEndTime">
-          <MDInput>Bidding End Time</MDInput>
-          <Form.Control
-            type="datetime-local"
-            placeholder="Enter bidding end time"
-            value={biddingEndTime}
-            onChange={(event) => setBiddingEndTime(event.target.value)}
-          />
-        </Form.Group>
-          <MDButton variant='success' type='submit' className="submit-btn">
-            Update Product
-          </MDButton>
-          <Link to={`/auctionList/`}>
-          <MDButton variant='success' type='submit' className="submit-btn">
-            Back to List 
-          </MDButton>
-          </Link>
-        </Col>
-      </Row>
-    </Form>
-  </Container>
-  );
+    return (
+      <CoverLayout image={bgImage}>
+        
+      <Card>
+      <MDBox
+             variant="gradient"
+             bgColor="secondary"
+             borderRadius="lg"
+             coloredShadow="secondary"
+             mx={2}
+             mt={-3}
+             p={3}
+             mb={1}
+             textAlign="center"
+           >
+      <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+      Update Your Product
+      </MDTypography>
+      </MDBox>
+      <MDBox pt={4} pb={3} px={3}>
+      <MDBox component="form" role="form">
+      <MDBox mb={2}>
+      <MDInput
+      type="text"
+      label="Name"
+      variant="standard"
+      fullWidth
+      value={name}
+      required
+      onChange={(e) => setName(e.target.value)}
+      />
+      </MDBox>
+      <MDBox mb={2}>
+      <MDInput
+      type="textarea"
+      label="Description"
+      variant="standard"
+      fullWidth
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      />
+      </MDBox>
+      <MDBox mb={2}>
+      <MDInput
+      type="number"
+      label="Starting Price"
+      variant="standard"
+      fullWidth
+      value={startingPrice}
+      onChange={(e) => setStartingPrice(e.target.value)}
+      />
+      </MDBox>
+      <MDBox mb={2}>
+      <MDInput
+      type="datetime-local"
+      label="Bidding End Time"
+      variant="standard"
+      fullWidth
+      required
+      value={biddingEndTime}
+      onChange={(e) => setBiddingEndTime(e.target.value)}
+      />
+      </MDBox>
+      <MDBox mt={4} mb={1}>
+      <MDBox mt={4} mb={1}>
+      <MDButton
+                     variant="gradient"
+                     color="info"
+                     fullWidth
+                     onClick={handleSubmit}
+                   >
+      Update
+      </MDButton>
+      
+      <Link to={`/auctionList/`}>
+            <MDButton variant="contained"
+                     color="error" type='submit' fullWidth className="submit-btn">
+              Back to List 
+            </MDButton>
+            </Link>
+      </MDBox>
+      </MDBox>
+      </MDBox>
+      </MDBox>
+      </Card>
+      </CoverLayout>
+      );
+    
 }
 
 export default UpdateProduct;        

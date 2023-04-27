@@ -6,6 +6,11 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
 import MDPagination from "components/MDPagination";
+import bgImage from "assets/images/istockphoto.jpeg";
+import CoverLayout
+ from "layouts/authentication/components/CoverLayout";
+ import Card from "@mui/material/Card";
+ import { Link } from 'react-router-dom';
 
 function UploadFormProduct() {
   const [name, setName] = useState("");
@@ -75,77 +80,113 @@ function UploadFormProduct() {
   };
 
   return (
-    
-    <MDBox onSubmit={handleFormSubmit} style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <h2 style={{ textAlign: "center", marginTop: "100px" }}>Product Form</h2>
-      <Form >
-        <Form.Group controlId="productName">
-          <Form.Label>Name</Form.Label>
-          <MDInput
-            type="text"
-            placeholder="Enter product name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="productDescription">
-          <Form.Label>Description</Form.Label>
-          <MDInput
-            type="textarea"
-            placeholder="Enter product description"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="productImageUrl">
-          <Form.Label>Image</Form.Label>
-          <MDInput
-            type="text"
-            placeholder="Enter image URL"
-            value={imageUrl}
-            onChange={(event) => setImageUrl(event.target.value)}
-          />
-        </Form.Group>
-        
-        <Form.Group controlId="productStartingPrice">
-          <Form.Label>Starting Price</Form.Label>
-          <MDInput
-            type="number"
-            placeholder="Enter starting price"
-            value={startingPrice}
-            onChange={(event) => setStartingPrice(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="productCurrentPrice">
-          <Form.Label>Current Price</Form.Label>
-          <MDInput
-            type="number"
-            placeholder="Enter current price"
-            value={currentPrice}
-            onChange={(event) => setCurrentPrice(event.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="productBiddingEndTime">
-          <Form.Label>Bidding End Time</Form.Label>
-          <MDInput
-            type="datetime-local"
-            placeholder="Enter bidding end time"
-            value={biddingEndTime}
-            onChange={(event) => setBiddingEndTime(event.target.value)}
-          />
-        </Form.Group>
-
-        <MDButton variant="Danger" type="submit">
-          Submit
-        </MDButton>
-      </Form>
-
-    
+    <CoverLayout image={bgImage}>
+      
+    <Card>
+    <MDBox
+           variant="gradient"
+           bgColor="secondary"
+           borderRadius="lg"
+           coloredShadow="secondary"
+           mx={2}
+           mt={-3}
+           p={3}
+           mb={1}
+           textAlign="center"
+         >
+    <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+    Product Form
+    </MDTypography>
     </MDBox>
-   
-  );
+    <MDBox pt={4} pb={3} px={3}>
+    <MDBox component="form" role="form">
+    <MDBox mb={2}>
+    <MDInput
+    type="text"
+    label="Name"
+    variant="standard"
+    fullWidth
+    value={name}
+    required
+    onChange={(e) => setName(e.target.value)}
+    />
+    </MDBox>
+    <MDBox mb={2}>
+    <MDInput
+    type="textarea"
+    label="Description"
+    variant="standard"
+    fullWidth
+    value={description}
+    onChange={(e) => setDescription(e.target.value)}
+    />
+    </MDBox>
+    <MDBox mb={2}>
+    <MDInput
+    type="text"
+    label="Image"
+    variant="standard"
+    fullWidth
+    value={imageUrl}
+    required
+    onChange={(e) => setImageUrl(e.target.value)}
+    />
+    </MDBox>
+    <MDBox mb={2}>
+    <MDInput
+    type="number"
+    label="Starting Price"
+    variant="standard"
+    fullWidth
+    value={startingPrice}
+    onChange={(e) => setStartingPrice(e.target.value)}
+    />
+    </MDBox>
+    <MDBox mb={2}>
+    <MDInput
+    type="number"
+    label="Current Price"
+    variant="standard"
+    fullWidth
+    value={currentPrice}
+    required
+    onChange={(e) => setCurrentPrice(e.target.value)}
+    />
+    </MDBox>
+    <MDBox mb={2}>
+    <MDInput
+    type="datetime-local"
+    label="Bidding End Time"
+    variant="standard"
+    fullWidth
+    required
+    value={biddingEndTime}
+    onChange={(e) => setBiddingEndTime(e.target.value)}
+    />
+    </MDBox>
+    <MDBox mt={4} mb={1}>
+    <MDBox mt={4} mb={1}>
+    <MDButton
+                   variant="gradient"
+                   color="info"
+                   fullWidth
+                   onClick={handleFormSubmit}
+                 >
+    Submit
+    </MDButton>
+    
+    <Link to={`/auctionList/`}>
+          <MDButton variant="contained"
+                   color="error" type='submit' fullWidth className="submit-btn">
+            Back to List 
+          </MDButton>
+          </Link>
+    </MDBox>
+    </MDBox>
+    </MDBox>
+    </MDBox>
+    </Card>
+    </CoverLayout>
+    );
 }
 export default UploadFormProduct;

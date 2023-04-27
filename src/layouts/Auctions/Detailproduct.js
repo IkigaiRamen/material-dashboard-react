@@ -3,6 +3,9 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import axios from "axios";
 import MDTypography from "components/MDTypography";
 import { useParams } from "react-router-dom";
+import MDBox from "components/MDBox";
+import bgImage from "assets/images/istockphoto.jpeg";
+import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 function ProductDetail(props) {
   const [product, setProduct] = useState({});
@@ -32,22 +35,24 @@ function ProductDetail(props) {
       }
     };
   return (
+    <CoverLayout image={bgImage}>
     <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
 
       <Row>
         <Col>
           <Image src={product.imageUrl} fluid />
         </Col>
-        <Col>
+        <MDBox>
           <MDTypography variant="h2">{product.name}</MDTypography>
           <MDTypography variant="body1">{product.description}</MDTypography>
           <MDTypography variant="body1">Starting Price: ${product.startingPrice}</MDTypography>
           <MDTypography variant="body1">Current Price: ${product.currentPrice}</MDTypography>
           <MDTypography variant="body1">Bidding End Time: {product.biddingEndTime}</MDTypography>
         <h2>BIDS</h2>
-        </Col>
+        </MDBox>
       </Row>
     </Container>
+    </CoverLayout>
   );
 }
 

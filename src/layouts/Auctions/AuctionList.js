@@ -9,6 +9,9 @@ import { BrowserRouter as Router, Route, useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Card1 from "@mui/material/Card";
 
 const { Meta } = Card;
 const socket = io("ws://localhost:5000");
@@ -139,8 +142,19 @@ const handleDelete = async (id) => {
 
 
 return (
+  <DashboardLayout>
+    <DashboardNavbar/>
+    <Card1>
   <Container class="bg-image">
     <Container maxWidth="sm"></Container>
+    <Link to={`/uploadformproduct`}>
+                    <MDButton variant="contained"
+                   color="info" type='submit' className="submit-btn" >Add Product</MDButton>
+                  </Link>
+                  <Link to={`/myproducts`}>
+                    <MDButton variant="contained"
+                   color="primary" type='submit' className="submit-btn" >My Products</MDButton>
+                  </Link>
     <Row gutter={[16, 16]}>
       {products.map((product) => (
         <Col span={12} md={6} lg={4} key={product._id}>
@@ -155,19 +169,26 @@ return (
             }
             actions={[]}
           >
+            <div>
+              
+            
             <Link to={`/detailproduct/${product._id}`}>
-                    <MDButton variant="info" className="mr-2">Details</MDButton>
+                    <MDButton variant="contained"
+                   color="info" type='submit' className="submit-btn" >Details</MDButton>
                   </Link>
             {product.id !== userInfo && (
             <div>
                   <Link to={`/updateformproduct/${product._id}`}>
-                    <MDButton variant="info" className="mr-2">Update</MDButton>
+                    <MDButton variant="contained"
+                   color="success" type='submit' className="submit-btn" >Update</MDButton>
                   </Link>
-                  <MDButton variant="danger" onClick={() => handleDelete(product._id)}>
+                  <MDButton variant="contained"
+                   color="error" type='submit' className="submit-btn" onClick={() => handleDelete(product._id)}>
                     Delete
                   </MDButton>
                 </div>
             )}
+            </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Meta
                 title={product.name}
@@ -218,7 +239,8 @@ return (
                 </div>
               </div>
             </div>
-            <MDButton onClick={() => handleProductSelect(product)}>
+            <MDButton variant="contained"
+                   color="dark" type='submit' size="medium" className="submit-btn" onClick={() => handleProductSelect(product)}>
               Select
             </MDButton>
           </Card>
@@ -242,7 +264,7 @@ return (
           ))}
         </ul>
         {currentProduct &&
-        currentProduct._id === "6446044732ce87c35e7e19b3" ? null : (
+        currentProduct._id === userInfo ? null : (
           <div>
             <MDInput
               type="number"
@@ -266,6 +288,8 @@ return (
       </div>
     )}
   </Container>
+  </Card1>
+  </DashboardLayout>
 );
 }
 
