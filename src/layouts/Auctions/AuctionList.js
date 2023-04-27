@@ -106,7 +106,7 @@ useEffect(()=>{
   const handleBidSubmit = () => {
     socket.emit("bid", {
       productId: currentProduct._id,
-      userId: userInfo, // Replace with the actual user ID
+      userId: id, // Replace with the actual user ID
       amount: biddingAmount,
     });
     socket.on("newBid", ({ productId, user, amount }) => {
@@ -176,7 +176,7 @@ return (
                     <MDButton variant="contained"
                    color="info" type='submit' className="submit-btn" >Details</MDButton>
                   </Link>
-            {product.id !== userInfo && (
+            {userInfo === product.id && (
             <div>
                   <Link to={`/updateformproduct/${product._id}`}>
                     <MDButton variant="contained"
