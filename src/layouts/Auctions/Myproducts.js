@@ -11,6 +11,7 @@ import {
 import MDButton from 'components/MDButton';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
+import { CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 
 const MyProducts = () => {
@@ -52,52 +53,61 @@ const MyProducts = () => {
 
   return (
     <DashboardLayout>
-    <DashboardNavbar/>
+    <DashboardNavbar />
     <Col sm={12} md={6} lg={4}>
       <Container className="my-3 p-3 bg-light" style={{ marginTop: "200px" }}>
         <h3>My Projects</h3>
         <Link to="/uploadformproduct">
-          <MDButton variant="contained"
-                   color="secondary" type='submit' className="submit-btn">
+          <MDButton variant="contained" color="secondary" type="submit" className="submit-btn">
             Add New Product
           </MDButton>
         </Link>
         <Container>
           {myproducts.map((product) => (
-            
-            <Card key={product._id} className="mb-4 p-3">
-              <Card.Img variant="top" src={product.image} />
-              <Card.Body>
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>{product.description}</Card.Text>
-                <Card.Text>
+            <Grid item xs={12} sm={6} md={4} key={product._id}>
+            <Card elevation={3}>
+              <CardMedia component="img" src={product.image} />
+              <CardContent>
+                <Typography variant="h5" component="h2">
+                  {product.name}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  {product.description}
+                </Typography>
+                <Typography variant="body2" component="p">
                   Current Price: ${product.currentPrice}
-                </Card.Text>
+                </Typography>
+              </CardContent>
+              <CardActions>
                 <Link to={`/detailproduct/${product._id}`}>
-                    <MDButton variant="contained"
-                   color="info" type='submit' className="submit-btn" >Details</MDButton>
-                  </Link>
-                  
+                  <MDButton variant="contained" color="info" type="submit" className="submit-btn">
+                    Details
+                  </MDButton>
+                </Link>
                 <Link to={`/updateformproduct/${product._id}`}>
-                  <MDButton variant="contained"
-                   color="success" type='submit' className="submit-btn">
+                  <MDButton variant="contained" color="success" type="submit" className="submit-btn">
                     Update Project
                   </MDButton>
                 </Link>
-                
-                  <MDButton variant="contained"
-                  color="error" type='submit' className="submit-btn" onClick={() => handleDeleteProduct(product._id)}>Delete</MDButton>
-               
-              </Card.Body>
+                <MDButton
+                  variant="contained"
+                  color="error"
+                  type="submit"
+                  className="submit-btn"
+                  onClick={() => handleDeleteProduct(product._id)}
+                >
+                  Delete
+                </MDButton>
+              </CardActions>
             </Card>
-            
+            </Grid>
           ))}
           
-          {/* </div> */}
         </Container>
       </Container>
     </Col>
-    </DashboardLayout>
+  </DashboardLayout>
+  
   );
 };
 
