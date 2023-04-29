@@ -1,8 +1,23 @@
-import { useState, useEffect,useContext } from "react";
-import { Context } from '../ContextStore';
+import { useState, useEffect, useContext } from "react";
+import { Context } from "../../../ContextStore";
+import {
+  Navbar,
+  NavDropdown,
+  Nav,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import {
+  BsFillPersonFill,
+  BsFillEnvelopeFill,
+  BsFillPlusCircleFill,
+} from "react-icons/bs";
+import { IoLogOut } from "react-icons/io5";
+import "./Header.css";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
-import { Navbar, NavDropdown, Nav, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
 // react-router components
 import { useLocation, Link } from "react-router-dom";
 
@@ -40,6 +55,8 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -53,7 +70,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
-  const { userData, setUserData } = useContext(Context)
+  const { userData, setUserData } = useContext(Context);
 
   useEffect(() => {
     // Setting the navbar type
@@ -152,111 +169,96 @@ function DashboardNavbar({ absolute, light, isMini }) {
             light={light}
           />
         </MDBox>
-        <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                        {/* <Nav.Link href="#features">Features</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link> */}
-                    </Nav>
-                    {userData ?
-                        (<Nav>
-                            <NavLink className="nav-item" id="addButton" to="/add-product">
-                                <OverlayTrigger key="bottom" placement="bottom"
-                                    overlay={
-                                        <Tooltip id={`tooltip-bottom`}>
-                                            <strong>Add</strong>  a sell.
-                                        </Tooltip>
-                                    }
-                                > 
-                                    <BsFillPlusCircleFill />
-                                </OverlayTrigger>
-                            </NavLink>
 
-                            <NavDropdown title={<img id="navImg" src={userData.avatar} alt="user-avatar"/>} drop="left" id="collasible-nav-dropdown">
-                                <NavLink className="dropdown-item" to={`/profile/${userData._id}`}>
-                                    <BsFillPersonFill />Profile
-                                </NavLink>
-
-                                {/* <NavDropdown.Divider /> */}
-
-                                {/* <NavLink className="dropdown-item" to="/your-sells">
-                                    <BsFillGridFill />Sells
-                            </NavLink> */}
-                                <NavLink className="dropdown-item" to="/messages">
-                                    <BsFillEnvelopeFill />Messages
-                            </NavLink>
-                                {/* <NavLink className="dropdown-item" to="/wishlist">
-                                    <BsFillHeartFill />Wishlist
-                            </NavLink> */}
-
-                                <NavDropdown.Divider />
-
-                                <NavLink className="dropdown-item" to="/auth/logout" onClick={() => {
-                                    setUserData(null)
-                                }}>
-                                    <IoLogOut />Log out
-                                </NavLink>
-                            </NavDropdown>
-                        </Nav>)
-                        :
-                        (<Nav>
-                            <NavLink className="nav-item" id="nav-sign-in" to="/auth/login">
-                                Sign In
-                            </NavLink>
-                            <NavLink className="nav-item" id="nav-sign-up" to="/auth/register">
-                                Sign Up
-                            </NavLink>
-                        </Nav>)
-                    }
-                </Navbar.Collapse>
         {isMini ? null : (
-          <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
-              <MDInput label="Search here" />
-            </MDBox>
-            <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in a">
-                <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <Icon sx={iconsStyle}>account_circle</Icon>
-                </IconButton>
-              </Link>
-              <Link className="dropdown-item" to={`/profile/${userData._id}`}>
-                                    <BsFillPersonFill />Profile
-                                </Link>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarMobileMenu}
-                onClick={handleMiniSidenav}
-              >
-                <Icon sx={iconsStyle} fontSize="medium">
-                  {miniSidenav ? "menu_open" : "menu"}
-                </Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
-              >
-                <Icon sx={iconsStyle}>settings</Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon sx={iconsStyle}>notifications</Icon>
-              </IconButton>
-              {renderMenu()}
-            </MDBox>
-          </MDBox>
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+              {/* <Nav.Link href="#features">Features</Nav.Link>
+             <Nav.Link href="#pricing">Pricing</Nav.Link> */}
+            </Nav>
+            {userData ? (
+              <Nav>
+                <NavLink className="nav-item" id="addButton" to="/add-product">
+                  <OverlayTrigger
+                    key="bottom"
+                    placement="bottom"
+                    overlay={
+                      <Tooltip id={`tooltip-bottom`}>
+                        <strong>Add</strong> a sell.
+                      </Tooltip>
+                    }
+                  >
+                    <BsFillPlusCircleFill />
+                  </OverlayTrigger>
+                </NavLink>
+
+                <NavDropdown
+                  title={
+                    <img id="navImg" src={userData.avatar} alt="user-avatar" />
+                  }
+                  drop="left"
+                  id="collasible-nav-dropdown"
+                >
+                  <NavLink
+                    className="dropdown-item"
+                    to={`/profile/${userData._id}`}
+                  >
+                    <BsFillPersonFill />
+                    Profile
+                  </NavLink>
+
+                  {/* <NavDropdown.Divider /> */}
+
+                  {/* <NavLink className="dropdown-item" to="/your-sells">
+                         <BsFillGridFill />Sells
+                 </NavLink> */}
+                  <NavLink className="dropdown-item" to="/messages">
+                    <BsFillEnvelopeFill />
+                    Messages
+                  </NavLink>
+                  {/* <NavLink className="dropdown-item" to="/wishlist">
+                         <BsFillHeartFill />Wishlist
+                 </NavLink> */}
+
+                  <NavDropdown.Divider />
+
+                  <NavLink
+                    className="dropdown-item"
+                    to="/auth/logout"
+                    onClick={() => {
+                      setUserData(null);
+                    }}
+                  >
+                    <IoLogOut />
+                    Log out
+                  </NavLink>
+                </NavDropdown>
+              </Nav>
+            ) : (
+              <>
+                <MDBox
+                  component={NavLink}
+                  to="/authentication/sign-in"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <MDButton variant="gradient" color="primary">
+                    <LoginIcon /> <br /> Sign in
+                  </MDButton>
+                </MDBox>
+                <MDBox
+                  component={NavLink}
+                  to="/authentication/sign-up"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <MDButton variant="gradient" color="success">
+                    <AppRegistrationIcon /> Register
+                  </MDButton>
+                </MDBox>
+              </>
+            )}
+          </Navbar.Collapse>
         )}
       </Toolbar>
     </AppBar>
