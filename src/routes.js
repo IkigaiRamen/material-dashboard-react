@@ -12,6 +12,8 @@ import Profile from "market/Pages/Profile";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import AddVisit from "Visits/AddVisit";
+import VisitList from "Visits/VisitList";
 
 const routes = [
   {
@@ -43,6 +45,22 @@ const routes = [
     key: "Market",
     route: "/Market",
     component: <Categories />,
+  },
+  {
+    
+    
+    
+     key: "Visit",
+    route: "/AddVisit",
+    component: <AddVisit />,
+  },
+  {
+    type:"collapse",
+    name:"Visit",
+    icon: <Icon fontSize="small">Visits</Icon>,
+    key: "Visit",
+    route: "/Visit",
+    component: <VisitList />,
   },
   {
     key: "MarketByCategory",
