@@ -60,7 +60,7 @@ function Basic() {
       email,
       password
     }
-    loginUser(user)
+    loginUser(user) 
       .then((res) => {
         if (!res.error) {
           setUserData(res.user);

@@ -6,34 +6,36 @@ import { AiFillCar } from 'react-icons/ai';
 import { GiFlowerPot, GiClothes } from 'react-icons/gi';
 import { TiSortAlphabetically } from 'react-icons/ti';
 import { MdPhoneAndroid } from 'react-icons/md'
+import MDButton from "components/MDButton";
 
 function CategoriesNav() {
     return (
         <div className="container" id="categories">
             <h1>Categories</h1>
             <Link to="/categories/all">
-                <Button variant="dark" id="all"><TiSortAlphabetically />All</Button>{' '}
+           
+                <MDButton color ="primary" variant="gradient" id="all"><TiSortAlphabetically />All</MDButton>{' '}
             </Link>
-            <Link to="/categories/properties">
-                <Button variant="dark" id="properties"><BsHouseDoorFill />Properties</Button>{' '}
+            <Link to="/categories/Food">
+                <MDButton color ="primary" variant="gradient" id="Food"><BsHouseDoorFill />Food crops</MDButton>{' '}
             </Link>
-            <Link to="/categories/auto">
-                <Button variant="dark" id="auto"><AiFillCar />Auto</Button>{' '}
+            <Link to="/categories/Feed">
+                <MDButton color ="primary" variant="gradient" id="Feed"><AiFillCar />feed crops</MDButton>{' '}
             </Link>
-            <Link to="/categories/home">
-                <Button variant="dark" id="home"><BsFillHouseFill />Home</Button>{' '}
+            <Link to="/categories/Fiber">
+                <MDButton color ="primary" variant="gradient" id="Fiber"><BsFillHouseFill />fiber crops</MDButton>{' '}
             </Link>
-            <Link to="/categories/electronics">
-                <Button variant="dark" id="electronics"><MdPhoneAndroid />Electronics</Button>{' '}
+            <Link to="/categories/Oil">
+                <MDButton color ="primary" variant="gradient" id="Oil"><MdPhoneAndroid />oil crops</MDButton>{' '}
             </Link>
-            <Link to="/categories/clothes">
-                <Button variant="dark" id="clothes"><GiClothes />Clothes</Button>{' '}
+            <Link to="/categories/Ornamental">
+                <MDButton color ="primary" variant="gradient" id="Ornamental"><GiClothes /> ornamental crops</MDButton>{' '}
             </Link>
-            <Link to="/categories/toys">
-                <Button variant="dark" id="toys"><BsFillPuzzleFill />Toys</Button>{' '}
+            <Link to="/categories/Industrial">
+                <MDButton color ="primary" variant="gradient" id="Industrial"><BsFillPuzzleFill />industrial crops</MDButton>{' '}
             </Link>
-            <Link to="/categories/garden">
-                <Button variant="dark" id="garden"><GiFlowerPot />Garden</Button>{' '}
+            <Link to="/categories/Garden">
+                <MDButton color ="primary" variant="gradient" id="Garden"><GiFlowerPot />Garden</MDButton>{' '}
             </Link>
         </div>
     )

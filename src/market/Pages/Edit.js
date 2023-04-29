@@ -4,13 +4,15 @@ import SimpleSider from '../components/Siders/SimpleSider';
 import { getSpecific, editProduct } from '../services/productData';
 
 import '../components/Edit/Edit.css'
+import { useNavigate, useParams } from 'react-router-dom';
 
-function Edit({ match, history }) {
+function Edit() {
+    const navigate=useNavigate();
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
     const [error, setError] = useState(null);
-    const productId = match.params.id;
+    const productId = useParams;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -40,7 +42,7 @@ function Edit({ match, history }) {
                     editProduct(_id, obj)
                         .then(res => {
                             if (!res.error) {
-                                history.push(`/categories/${category}/${_id}/details`)
+                                navigate(`/categories/${category}/${_id}/details`)
                             } else {
                                 setLoading(false);
                                 setError(res.error);
@@ -54,7 +56,7 @@ function Edit({ match, history }) {
             editProduct(_id, obj)
                 .then(res => {
                     if (!res.error) {
-                        history.push(`/categories/${category}/${_id}/details`)
+                        navigate(`/categories/${category}/${_id}/details`)
                     } else {
                         setLoading(false);
                         setError(res.error);

@@ -9,9 +9,18 @@ import '../components/Siders/SearchSider.css'
 import '../components/Categories/Categories.css';
 import '../components/ProductCard/ProductCard.css';
 import { useParams } from 'react-router-dom';
+import MDBox from "components/MDBox";
+import Footer from "examples/Footer";
+import Header from "layouts/profile/components/Header";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import MDInput from 'components/MDInput';
+
+
 
 function Categories() {
-    let currentCategory = useParams();
+    let currentCategory = useParams().category;
+    console.log(currentCategory)
     const [products, setProduct] = useState([])
     const [page, setPage] = useState(1);
     const [query, setQuery] = useState("");
@@ -55,8 +64,12 @@ function Categories() {
 
       return (
         <>
+          <DashboardLayout>
+        <DashboardNavbar />
+        <MDBox mb={2} />
+       
             <div id="sider">
-                <input className="col-lg-6" type="text" placeholder="Search..." name="search" value={query} onChange={handleSearch} />
+                <MDInput    variant="outlined" className="col-lg-6" type="text" placeholder="Search..." name="search" value={query} onChange={handleSearch} />
             </div>
             <CategoriesNav />
             <div className="container">
@@ -116,6 +129,8 @@ function Categories() {
                     </div>
                 }
             </div>
+      </DashboardLayout>
+            
         </>
     )
 }

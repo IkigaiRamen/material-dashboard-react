@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Row, Tabs, Tab, Image, OverlayTrigger , Tooltip} from 'react-bootstrap';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { useParams } from 'react-router-dom';
 import { wishProduct } from '../../../services/productData'
 
-function ProductInfo({ params }) {
+function ProductInfo() {
+    const params = useParams();
     const [wish, setWish] = useState(false);
 
     useEffect(() => {

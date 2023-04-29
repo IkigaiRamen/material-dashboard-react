@@ -1,97 +1,96 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Form, Button, Col, Spinner, Alert } from 'react-bootstrap';
 import { createProduct } from '../services/productData';
 import SimpleSider from '../components/Siders/SimpleSider';
 import '../components/CreateSell/CreateSell.css';
+import { useNavigate } from 'react-router-dom';
 
-class AddProduct extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { title: "", price: "", description: "", city: "", category: "", image: "", loading: false, alertShow: false, errors: [] };
-        this.onChangeHandler = this.onChangeHandler.bind(this);
-        this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    }
-
-    onChangeHandler(e) {
-        e.preventDefault();
-        this.setState({ [e.target.name]: e.target.value });
-        if (e.target.files) {
-            this.setState({ image: e.target.files[0] })
-        }
+const AddProduct = () => {
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [city, setCity] = useState('');
+    const [category, setCategory] = useState('');
+    const [image, setImage] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [alertShow, setAlertShow] = useState(false);
+    const [errors, setErrors] = useState([]);
+    const navigate = useNavigate();
+  
+    const onChangeHandler = (e) => {
+      e.preventDefault();
+      const { name, value, files } = e.target;
+      if (name === 'title') setTitle(value);
+      if (name === 'price') setPrice(value);
+      if (name === 'description') setDescription(value);
+      if (name === 'city') setCity(value);
+      if (name === 'category') setCategory(value);
+      if (name === 'image' && files) setImage(files[0]);
     };
-
-    onSubmitHandler(e) {
-        e.preventDefault();
-        let { title, price, description, city, category, image } = this.state;
-        let obj = { title, price, description, city, category }
-        this.setState({ loading: true })
-        this.getBase64(image)
-            .then((data) => {
-                obj['image'] = data;
-                createProduct(obj)
-                    .then(res => {
-                        if (res.error) {
-                            this.setState({ loading: false })
-                            this.setState({ errors: res.error })
-                            this.setState({ alertShow: true })
-                        } else {
-                            this.props.history.push(`/categories/${category}/${res.productId}/details`)
-                        }
-                    })
-                    .catch(err => console.error('Creating product err: ', err))
+  
+    const onSubmitHandler = (e) => {
+      e.preventDefault();
+      const obj = { title, price, description, city, category };
+      setLoading(true);
+      getBase64(image)
+        .then((data) => {
+          obj['image'] = data;
+          createProduct(obj)
+            .then((res) => {
+              if (res.error) {
+                setLoading(false);
+                setErrors(res.error);
+                setAlertShow(true);
+              } else {
+                navigate(`/categories/${category}/${res.productId}/details`);
+              }
             })
-            .catch(err => console.error('Converting to base64 err: ', err));
-    }
-
-    getBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
-    }
-
-    render() {
+            .catch((err) => console.error('Creating product err: ', err));
+        })
+        .catch((err) => console.error('Converting to base64 err: ', err));
+    };
+  
+    const getBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    };
         return (
             <>
                 <SimpleSider />
                 <div className='container'>
                     <h1 className="heading">Add a Product</h1>
-                    <Form onSubmit={this.onSubmitHandler}>
-                        {this.state.alertShow &&
-                            <Alert variant="danger" onClose={() => this.setState({ alertShow: false })} dismissible>
-                                <p>
-                                    {this.state.errors}
-                                </p>
-                            </Alert>
-                        }
+                    <Form onSubmit={onSubmitHandler}>
+                      
                         <Form.Row>
                             <Form.Group as={Col} controlId="formGridTitle">
                                 <Form.Label>Title</Form.Label>
-                                <Form.Control type="text" placeholder="Enter title" name="title" required onChange={this.onChangeHandler} />
+                                <Form.Control type="text" placeholder="Enter title" name="title" required                onChange={(e) => setTitle(e.target.value)} />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridPrice">
                                 <Form.Label>Price</Form.Label>
-                                <Form.Control type="number" step="0.01" placeholder="Price" name="price" required onChange={this.onChangeHandler} />
+                                <Form.Control type="number" step="0.01" placeholder="Price" name="price" required                 onChange={(e) => setPrice(e.target.value)} />
                             </Form.Group>
                         </Form.Row>
 
                         <Form.Group controlId="formGridDescription.ControlTextarea1">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" rows={3} name="description" required onChange={this.onChangeHandler} />
+                            <Form.Control as="textarea" rows={3} name="description" required                 onChange={(e) => setDescription(e.target.value)} />
                         </Form.Group>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="formGridCity">
                                 <Form.Label>City</Form.Label>
-                                <Form.Control name="city" placeholder="Sofia" required onChange={this.onChangeHandler} />
+                                <Form.Control name="city" placeholder="Sofia" required                 onChange={(e) => setCity(e.target.value)}/>
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridCategory">
                                 <Form.Label>Category</Form.Label>
-                                <Form.Control as="select" defaultValue="Choose..." name="category" required onChange={this.onChangeHandler}>
+                                <Form.Control as="select" defaultValue="Choose..." name="category" required                 onChange={(e) => setCategory(e.target.value)}>
                                     <option>Choose...</option>
                                     <option>properties</option>
                                     <option>auto</option>
@@ -105,7 +104,7 @@ class AddProduct extends Component {
 
                             <Form.Group as={Col} controlId="formGridImage" >
                                 <Form.Label>Image</Form.Label>
-                                <Form.Control name="image" type="file" required onChange={this.onChangeHandler} />
+                                <Form.Control name="image" type="file" required                  />
                             </Form.Group>
                         </Form.Row>
                         {this.state.loading ?
@@ -120,6 +119,6 @@ class AddProduct extends Component {
             </>
         )
     }
-}
+
 
 export default AddProduct;

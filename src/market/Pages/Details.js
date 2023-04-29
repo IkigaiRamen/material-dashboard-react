@@ -8,9 +8,12 @@ import { getSpecific } from '../services/productData'
 
 import '../components/Details/ProductInfo/ProductInfo.css';
 import '../components/Details/Aside/Aside.css';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function Details({ match, history }) {
-    let productId = match.params.id;
+function Details() {
+    const navigate=useNavigate();
+    const params=useParams()
+    let productId = params.id;
     let [product, setProduct] = useState([])
     let [loading, setLoading] = useState(true);
    
@@ -34,7 +37,7 @@ function Details({ match, history }) {
                             <ProductInfo params={product} />
                         </Col>
                         <Col lg={4}>
-                            <Aside params={product} history={history} />
+                            <Aside params={product} navigate={navigate} />
                         </Col>
                     </Row></>) : (<Spinner animation="border" />)}
             </div>

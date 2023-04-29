@@ -3,6 +3,9 @@ import { getUserConversations, sendMessage } from '../services/messagesData';
 import { Container, Row, Form, InputGroup, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
+import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
+import MDBox from 'components/MDBox';
 
 import '../components/Messages/Aside.css'
 import '../components/Messages/Article.css'
@@ -61,6 +64,9 @@ function Messages() {
 
 
     return (
+        <DashboardLayout>
+        <DashboardNavbar />
+        <MDBox mb={2} />
         <Container>
             <Row>
                 <aside className="col-lg-4 col-md-4">
@@ -135,6 +141,7 @@ function Messages() {
                 </article>
             </Row>
         </Container>
+        </DashboardLayout>
     )
 }
 

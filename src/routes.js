@@ -48,18 +48,12 @@ const routes = [
     component: <SignUp />,
   },
   {
-    type: "collapse",
-    name: "Market",
     key: "Market",
-    icon: <Icon fontSize="small">Marketplace</Icon>,
     route: "/Market",
     component: <Categories />,
   },
   {
-    type: "collapse",
-    name: "MarketByCategory",
     key: "MarketByCategory",
-    icon: <Icon fontSize="small">Marketplace by category</Icon>,
     route: "/categories/:category",
     component: <Categories />,
   },
