@@ -17,7 +17,7 @@ function UpdateProduct() {
   const [description, setDescription] = useState("");
   
   const [startingPrice, setStartingPrice] = useState(0);
- 
+  const [currentPrice, setCurrentPrice] = useState(0);
   const [biddingEndTime, setBiddingEndTime] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   
@@ -30,6 +30,7 @@ function UpdateProduct() {
       name: name,
       description: description,
       startingPrice: startingPrice,
+      currentPrice: currentPrice,
       biddingEndTime:biddingEndTime,
     };
 
@@ -93,6 +94,16 @@ function UpdateProduct() {
       fullWidth
       value={startingPrice}
       onChange={(e) => setStartingPrice(e.target.value)}
+      />
+      </MDBox>
+      <MDBox mb={2}>
+      <MDInput
+      type="number"
+      label="Current Price"
+      variant="standard"
+      fullWidth
+      value={currentPrice}
+      onChange={(e) => setCurrentPrice(e.target.value)}
       />
       </MDBox>
       <MDBox mb={2}>
