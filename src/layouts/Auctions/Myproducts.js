@@ -15,7 +15,7 @@ import { CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/mate
 
 
 const MyProducts = () => {
-  const [myproducts, setMyProducts] = useState([]);
+  const [myProducts, setMyProducts] = useState([]);
   const [userInfo, setUserInfo] = useState("");
   
   const config = {
@@ -44,7 +44,7 @@ const MyProducts = () => {
   const handleDeleteProduct = async (productId) => {
     try {
       await axios.delete(`http://localhost:5000/api/products/${productId}`);
-      const updatedProducts = myproducts.filter((product) => product._id !== productId);
+      const updatedProducts = myProducts.filter((product) => product._id !== productId);
       setMyProducts(updatedProducts);
     } catch (error) {
       console.error(error);
@@ -63,7 +63,7 @@ const MyProducts = () => {
           </MDButton>
         </Link>
         <Container>
-          {myproducts.map((product) => (
+          {myProducts.map((product) => (
             <Grid item xs={12} sm={6} md={4} key={product._id}>
             <Card elevation={3}>
               <CardMedia component="img" src={product.image} />
